@@ -12,4 +12,20 @@ public class Cor {
 
     @Column(name= "nomecor")
     private String nomecor;
+
+    public int getIdcor() {
+        return idcor;
+    }
+
+    public void setIdcor(int idcor) {
+        this.idcor = idcor;
+    }
+
+    public String getNomecor() {
+        return nomecor;
+    }
+
+    public void setNomecor(String nomecor) {
+        this.nomecor = nomecor;
+    }
 }
