@@ -10,10 +10,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -29,20 +28,20 @@ public class MarcaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(marcaRepository.save(marca1));
     }
 
-    @GetMapping("/marcas")
-    public ResponseEntity<List<Marca>> getAllMarcas(){
+    @GetMapping
+    public ResponseEntity<List<Marca>> getAllMarca() {
         return ResponseEntity.status(HttpStatus.OK).body(marcaRepository.findAll());
     }
-    @GetMapping("/marcas/{id}")
-    public ResponseEntity<Object> getOneMarca(@PathVariable(value="id") UUID id){
-        Optional<Marca> marcaO = marcaRepository.findById(id);
-        if(marcaO.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Marca not found.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(marcaO.get());
+        @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneMarca(@PathVariable(value="id") int id){
+        var marca = marcaService.findMarcaById(id);
+            if(marca.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Marca not found.");
+            }
+        return ResponseEntity.status(HttpStatus.OK).body(marca);
     }
-    @PutMapping("/marcas/{id}")
-    public ResponseEntity<Object> updateMarca(@PathVariable(value="id") UUID id, @RequestBody @Valid MarcaRecordDto marcaRecordDto){
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateMarca(@PathVariable(value="id") int id, @RequestBody @Valid MarcaRecordDto marcaRecordDto){
 
         Optional<Marca> marcaO = marcaRepository.findById(id);
         if(marcaO.isEmpty()){
@@ -52,8 +51,8 @@ public class MarcaController {
         BeanUtils.copyProperties(marcaRecordDto, marca1);
         return ResponseEntity.status(HttpStatus.OK).body(marcaRepository.save(marca1));
     }
-    @DeleteMapping("/marcas/{id}")
-    public ResponseEntity<Object> deleteMarca(@PathVariable(value = "id") UUID id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteMarca(@PathVariable(value = "id") int id){
         Optional<Marca> marca1 = marcaRepository.findById(id);
         if(marca1.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Marca not found.");

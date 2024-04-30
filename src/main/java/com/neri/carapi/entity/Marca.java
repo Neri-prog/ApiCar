@@ -1,26 +1,23 @@
 package com.neri.carapi.entity;
-
 import jakarta.persistence.*;
-
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "marca")
 public class Marca implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "idmarca")
-    private UUID idmarca;
+    private int idmarca;
 
     @Column(name = "nomemarca")
     private String nomemarca;
 
-    public UUID getIdmarca() {
+    public int getIdmarca() {
         return idmarca;
     }
 
-    public void setIdmarca(UUID idmarca) {
+    public void setIdmarca(int idmarca) {
         this.idmarca = idmarca;
     }
 

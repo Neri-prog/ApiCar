@@ -19,23 +19,21 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("carro")
+@RequestMapping("/carro")
 public class CarroController {
     private final CarroService carroService;
     private final CarroRepository carroRepository;
 
     @PostMapping()
-    public ResponseEntity<Carro> saveCarro (@RequestBody @Valid CarroRecordDto carroRecordDto){
-        var carro1 = new Carro();
-        BeanUtils.copyProperties(carroRecordDto, carro1);
-        return ResponseEntity.status(HttpStatus.CREATED).body(carroRepository.save(carro1));
+    public ResponseEntity<Carro> saveCarro (@RequestBody @Valid CarroRecordDto carroRecordDto) throws Exception {
+        return carroService.addCarro(carroRecordDto);
     }
 
-    @GetMapping("/carro")
+    @GetMapping("")
     public ResponseEntity<List<Carro>> getAllCarros(){
         return ResponseEntity.status(HttpStatus.OK).body(carroRepository.findAll());
     }
-    @GetMapping("/carro/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> getOneCarro(@PathVariable(value="id") int id){
         Optional<Carro> carroO = carroRepository.findById(id);
         if(carroO.isEmpty()){
@@ -43,7 +41,7 @@ public class CarroController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(carroO.get());
     }
-    @PutMapping("/carro/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateCarro(@PathVariable(value="id") int id, @RequestBody @Valid CarroRecordDto carroRecordDto){
 
         Optional<Carro> carroO = carroRepository.findById(id);
@@ -54,7 +52,7 @@ public class CarroController {
         BeanUtils.copyProperties(carroRecordDto, carro1);
         return ResponseEntity.status(HttpStatus.OK).body(carroRepository.save(carro1));
     }
-    @DeleteMapping("/carro/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCarro(@PathVariable(value = "id") int id){
         Optional<Carro> carro1 = carroRepository.findById(id);
         if(carro1.isEmpty()){

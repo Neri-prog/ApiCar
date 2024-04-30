@@ -32,11 +32,11 @@ public class CorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(corRepository.save(cor1));
     }
 
-    @GetMapping("/cor")
+    @GetMapping
     public ResponseEntity<List<Cor>> getAllCores(){
         return ResponseEntity.status(HttpStatus.OK).body(corRepository.findAll());
     }
-    @GetMapping("/cor/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> getOneCor(@PathVariable(value="id") int id){
         Optional<Cor> corO = corRepository.findById(id);
         if(corO.isEmpty()){
@@ -44,7 +44,7 @@ public class CorController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(corO.get());
     }
-    @PutMapping("/cor/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateCor(@PathVariable(value="id") int id, @RequestBody @Valid CorRecordDto corRecordDto){
 
         Optional<Cor> corO = corRepository.findById(id);
@@ -55,7 +55,7 @@ public class CorController {
         BeanUtils.copyProperties(corRecordDto, cor1);
         return ResponseEntity.status(HttpStatus.OK).body(corRepository.save(cor1));
     }
-    @DeleteMapping("/cor/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCor(@PathVariable(value = "id") int id){
         Optional<Cor> cor1 = corRepository.findById(id);
         if(cor1.isEmpty()){
